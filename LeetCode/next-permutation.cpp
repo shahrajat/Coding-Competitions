@@ -2,10 +2,10 @@ class Solution {
 public:
     void nextPermutation(vector<int>& nums) {
         int len = nums.size();
-        if(len > 1 )    // > 1 element in vector
+        if(len > 1 )
         {
             int i=len-2;
-            while(i>=0 && !(nums[i] < nums[i+1]) )
+            while(i>=0 && !(nums[i] < nums[i+1]) ) //find the pivot
                 i--;
             if(i<0)
                 reverse(nums.begin(),nums.end());
