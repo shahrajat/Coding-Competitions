@@ -17,7 +17,7 @@ public:
     vector<int> getNewsFeed(int userId) {
         vector<int> result;
         auto comp = [](const pair<int,int>& l, const pair<int,int>& r) {return l.second > r.second;};
-        priority_queue<pair<int,int>, vector<pair<int, int>>, decltype( comp )> pq (comp);
+        priority_queue<pair<int,int>, vector<pair<int, int>>, decltype(comp)> pq (comp);
         unordered_set<int> followingIds = following[userId];
         followingIds.insert(userId);
         
