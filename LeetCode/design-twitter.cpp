@@ -13,19 +13,11 @@ public:
         tweets[userId].push_back(make_pair(tweetId, time++));
     }
     
-    struct compare  
-     {  
-       bool operator()(const pair<int,int>& l, const pair<int,int>& r)  
-       {  
-           return l.second > r.second;  
-       }  
-     };  
-
-    
     /** Retrieve the 10 most recent tweet ids in the user's news feed. Each item in the news feed must be posted by users who the user followed or by the user herself. Tweets must be ordered from most recent to least recent. */
     vector<int> getNewsFeed(int userId) {
         vector<int> result;
-        priority_queue<pair<int,int>, vector<pair<int, int>>, compare> pq;
+        auto comp = [](const pair<int,int>& l, const pair<int,int>& r) {return l.second > r.second;};
+        priority_queue<pair<int,int>, vector<pair<int, int>>, decltype( comp )> pq (comp);
         unordered_set<int> followingIds = following[userId];
         followingIds.insert(userId);
         
