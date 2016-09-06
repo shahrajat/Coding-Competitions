@@ -24,21 +24,17 @@ public:
     
     /** Retrieve the 10 most recent tweet ids in the user's news feed. Each item in the news feed must be posted by users who the user followed or by the user herself. Tweets must be ordered from most recent to least recent. */
     vector<int> getNewsFeed(int userId) {
-        int max_feeds = 10; 
         vector<int> result;
         priority_queue<pair<int,int>, vector<pair<int, int>>, compare> pq;
         unordered_set<int> followingIds = following[userId];
-        followingIds.insert(userId);      //user follows himself too
+        followingIds.insert(userId);
         
         for(int followeeId : followingIds) {
             int count = tweets[followeeId].size();
-            for(int i=count-1; i>=0 && i>count-(max_feeds+1); i--) {
-                pair<int, int> tweet = tweets[followeeId][i];
-                if(pq.size()>=10 && tweet.second > pq.top().second) { //this tweet has more time than the top
+            for(int i=count-1; i>=0 && i>count-11; i--) {
+                pq.push(tweets[followeeId][i]);
+                if(pq.size()>10)
                     pq.pop();
-                    pq.push(tweet);
-                } else if (pq.size()<10 || pq.empty())
-                    pq.push(tweet);
             }
         }
         
